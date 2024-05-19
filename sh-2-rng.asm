@@ -19,21 +19,21 @@
 galois16:
 
 SECTION galoisRNG
-
-	; for (y = 16; y > 0; y--) {
+	; load seed
 	mov.w seed,r0
 	; load taps
 	mov.w #$B400,r1
 	; optimization - 32-bit CPU does 16-bit shifts with ease!
-	shar r1
+	shar r0
 	; Shifts on SH-2 automatically set T bit, which just so happens to be true/false branching bit!
-	; TODO - check behavior of branches in relation to pipeline - might be like MIPS where delay slots are needed
 	bt skipXOR
-	; Uncomment line below if delay slot needed
-	; NOP
+	; Delay slot 
+	nop
 	; XOR
 	xor r1,r0
 skipXOR:
+	; save seed
+	mov r0,seed
 	;return
 	rts
 	
