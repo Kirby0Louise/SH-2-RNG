@@ -36,6 +36,8 @@ skipXOR:
 	mov r0,seed
 	;return
 	rts
+	;delay slot (not required, but speeds up execution time greatly by avoiding double galois16 call)
+	nop
 	
 ENDSECTION galoisRNG
 
